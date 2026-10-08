@@ -22,15 +22,36 @@ INSERT INTO field (id, openalex_id, display_name, domain_id) VALUES
     (20, 'https://openalex.org/fields/20', 'Economics, Econometrics and Finance', 3)
 ON CONFLICT (id) DO NOTHING;
 
-INSERT INTO subfield (id, openalex_id, display_name, field_id) VALUES
-    (1702, 'https://openalex.org/subfields/1702', 'Artificial Intelligence', 17),
-    (1707, 'https://openalex.org/subfields/1707', 'Computer Vision and Pattern Recognition', 17),
-    (1705, 'https://openalex.org/subfields/1705', 'Computer Networks and Communications', 17),
-    (3103, 'https://openalex.org/subfields/3103', 'Astronomy and Astrophysics', 31),
-    (2730, 'https://openalex.org/subfields/2730', 'Oncology', 27),
-    (2705, 'https://openalex.org/subfields/2705', 'Cardiology and Cardiovascular Medicine', 27),
-    (1312, 'https://openalex.org/subfields/1312', 'Molecular Biology', 13),
-    (2002, 'https://openalex.org/subfields/2002', 'Economics and Econometrics', 20)
+-- description / wikipedia_url / wikidata_id mirror what the taxonomy sync pulls from
+-- OpenAlex (ids.wikipedia / ids.wikidata). Two rows are hand-corrected here the way a
+-- production QA pass would: OpenAlex points subfield 3103 at the *journal* "Astronomy
+-- and Astrophysics" and 2002 at the narrower "Econometrics" — both repointed to the
+-- field article.
+INSERT INTO subfield (id, openalex_id, display_name, description, wikipedia_url, wikidata_id, field_id) VALUES
+    (1702, 'https://openalex.org/subfields/1702', 'Artificial Intelligence',
+     'field of computer science and engineering practices for intelligence demonstrated by machines and intelligent agents',
+     'https://en.wikipedia.org/wiki/Artificial_intelligence', 'Q11660', 17),
+    (1707, 'https://openalex.org/subfields/1707', 'Computer Vision and Pattern Recognition',
+     'computerized information extraction from images',
+     'https://en.wikipedia.org/wiki/Computer_vision', 'Q844240', 17),
+    (1705, 'https://openalex.org/subfields/1705', 'Computer Networks and Communications',
+     'network that allows computers to share resources and communicate with each other',
+     'https://en.wikipedia.org/wiki/Computer_network', 'Q1301371', 17),
+    (3103, 'https://openalex.org/subfields/3103', 'Astronomy and Astrophysics',
+     'scientific study of celestial objects and phenomena',
+     'https://en.wikipedia.org/wiki/Astronomy', 'Q333', 31),
+    (2730, 'https://openalex.org/subfields/2730', 'Oncology',
+     'branch of medicine dealing with cancer',
+     'https://en.wikipedia.org/wiki/Oncology', 'Q162555', 27),
+    (2705, 'https://openalex.org/subfields/2705', 'Cardiology and Cardiovascular Medicine',
+     'branch of medicine dealing with disorders of the heart as well as parts of the circulatory system',
+     'https://en.wikipedia.org/wiki/Cardiology', 'Q10379', 27),
+    (1312, 'https://openalex.org/subfields/1312', 'Molecular Biology',
+     'branch of biology that deals with the molecular basis of biological activity',
+     'https://en.wikipedia.org/wiki/Molecular_biology', 'Q7202', 13),
+    (2002, 'https://openalex.org/subfields/2002', 'Economics and Econometrics',
+     'social science that studies the production, distribution, and consumption of goods and services',
+     'https://en.wikipedia.org/wiki/Economics', 'Q8134', 20)
 ON CONFLICT (id) DO NOTHING;
 
 INSERT INTO topic (id, openalex_id, display_name, subfield_id, keywords) VALUES

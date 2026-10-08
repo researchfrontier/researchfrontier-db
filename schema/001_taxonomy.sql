@@ -27,7 +27,9 @@ CREATE TABLE IF NOT EXISTS subfield (
     id            INTEGER PRIMARY KEY,              -- OpenAlex numeric id
     openalex_id   TEXT UNIQUE NOT NULL,
     display_name  TEXT NOT NULL,
-    description   TEXT,
+    description   TEXT,                             -- CC0 one-line gloss (from OpenAlex/Wikidata)
+    wikipedia_url TEXT,                             -- canonical encyclopedic intro to link out to (from OpenAlex ids.wikipedia)
+    wikidata_id   TEXT,                             -- permanent Wikidata QID anchor (from OpenAlex ids.wikidata)
     field_id      INTEGER NOT NULL REFERENCES field(id) ON DELETE CASCADE,
     works_count   BIGINT NOT NULL DEFAULT 0,
     updated_at    TIMESTAMPTZ NOT NULL DEFAULT now()
